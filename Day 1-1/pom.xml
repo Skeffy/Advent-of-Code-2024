@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.skeffy</groupId>
-    <artifactId>Day-1-1</artifactId>
+    <artifactId>Day-1</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
