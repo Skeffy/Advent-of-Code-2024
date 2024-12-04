@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Part1 {
     public static void main(String[] args) {
         try (Scanner in = new Scanner(new File("src/main/resources/input.txt"))) {
             List<Integer> a = new ArrayList<>();
