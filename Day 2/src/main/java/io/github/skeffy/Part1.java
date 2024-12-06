@@ -12,12 +12,17 @@ public class Part1 {
         System.out.println(getNumOfSafeReports(parseReports()));
     }
 
-    public static List<String> parseReports() {
-        List<String> reports = new ArrayList<>();
+    public static List<List<Integer>> parseReports() {
+        List<List<Integer>> reports = new ArrayList<>();
 
         try (Scanner in = new Scanner(new File("src/main/resources/input.txt"))) {
             while (in.hasNext()) {
-                reports.add(in.nextLine());
+                int[] reportAsArray = Arrays.stream(in.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+                List<Integer> report = new ArrayList<>();
+                for (int num : reportAsArray) {
+                    report.add(num);
+                }
+                reports.add(report);
             }
         } catch (FileNotFoundException e) {
             System.out.println("unable to open file");
@@ -26,35 +31,41 @@ public class Part1 {
         return reports;
     }
 
-    public static int getNumOfSafeReports(List<String> reports) {
+    public static int getNumOfSafeReports(List<List<Integer>> reports) {
         int numOfSafeReports = 0;
 
-        for (String line : reports) {
-            int[] report = Arrays.stream(line.split(" ")).mapToInt(Integer::parseInt).toArray();
-            int currentNum = report[0];
-            boolean isIncreasing = false;
-            System.out.println(Arrays.toString(report));
-            for (int i = 1; i < report.length; i++) {
-                if (report[i] == currentNum || report[i] < currentNum - 3 || report[i] > currentNum + 3) {
-                    break;
-                }
-                if (i == 1 && report[i] > currentNum) {
-                    isIncreasing = true;
-                }
-                if (isIncreasing && report[i] > currentNum) {
-                    currentNum = report[i];
-                } else if (!isIncreasing && report[i] < currentNum) {
-                    currentNum = report[i];
-                } else {
-                    break;
-                }
-                if (i == report.length - 1) {
-                    numOfSafeReports++;
-                    isIncreasing = false;
-                }
+        for (List<Integer> report : reports) {
+            if (isReportSafe(report)) {
+                numOfSafeReports++;
             }
         }
 
         return numOfSafeReports;
+    }
+
+    public static boolean isReportSafe(List<Integer> report) {
+        boolean isSafe = false;
+        int currentNum = report.getFirst();
+        boolean isIncreasing = false;
+        System.out.println(report);
+        for (int i = 1; i < report.size(); i++) {
+            if (report.get(i) == currentNum || report.get(i) < currentNum - 3 || report.get(i) > currentNum + 3) {
+                break;
+            }
+            if (i == 1 && report.get(i) > currentNum) {
+                isIncreasing = true;
+            }
+            if (isIncreasing && report.get(i) > currentNum) {
+                currentNum = report.get(i);
+            } else if (!isIncreasing && report.get(i) < currentNum) {
+                currentNum = report.get(i);
+            } else {
+                break;
+            }
+            if (i == report.size() - 1) {
+                isSafe = true;
+            }
+        }
+        return isSafe;
     }
 }
