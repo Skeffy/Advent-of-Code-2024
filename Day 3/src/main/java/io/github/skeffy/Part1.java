@@ -1,6 +1,6 @@
 package io.github.skeffy;
 
-public class Main {
+public class Part1 {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
